@@ -3,7 +3,8 @@
 
 SnakeGame::SnakeGame()
 {
-	rootScr = initscr();	// Initialize the screen
+	rootScr = new WINDOW;
+	*rootScr = initscr();	// Initialize the screen
 	curs_set(0);					// Hide cursor
 	keypad(rootScr, true);			// Enable special keys, such as KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN
 	timeout(100);					// Set the screen update delay / Refresh rate in milliseconds
