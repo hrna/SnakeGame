@@ -16,13 +16,15 @@ private:
 	int iKey {KEY_RIGHT};						// Default starting direction
 	int keyPressed {};							// Pressed key input stored in this
 	int points{};								// Points collected after each food
-	char cFood {'o'};							// Char representing food
-	char cWall {'#'};							// Char representing an obstacle
+	// It would be awesome to take that from external file
+	const char cFood {'o'};							// Char representing food
+	const char cWall {'#'};							// Char representing an obstacle
 	
 	std::vector<std::vector<char>> gameArea;	// Game area will be stored in here, borders and obstacles
 	std::vector<std::vector<int>> snake;		// Snake is stored in here.
 	std::vector<int> food;						// Coordinates for food location
 	std::vector<int> mov;						// Coordinates for movement in checkInput()
+	// vector of vectors is not a good idea. it's much faster to use int[][]. vector.at() is reeeeaaaally slow
 	std::vector<std::vector<int>>::iterator it;	// Iterator used in checkInput(): adding new head
 	
 	void terminate(); 														// Terminates the window
@@ -32,6 +34,7 @@ private:
 	void displaySnake();													// Display snake
 	
 	void setFood();															// Update food location
+	void setFood(int x, int y);												// Makes it easier to test
 	void consumedFood();													// Check if snake consumed food
 	
 	void chekInput();														// Check input for new directions
