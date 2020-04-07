@@ -10,14 +10,13 @@
 class SnakeGame
 {
 private: 
-	WINDOW *rootScr {nullptr};					// root screen
 	int scrW {}, scrH {};						// Screen width / height
 	int xPos {}, yPos {};						// Default coordinates for the snake to start
 	int iKey {KEY_RIGHT};						// Default starting direction
 	int keyPressed {};							// Pressed key input stored in this
 	int points{};								// Points collected after each food
-	char cFood {'o'};							// Char representing food
-	char cWall {'#'};							// Char representing an obstacle
+	const char cFood {'o'};						// Char representing food
+	const char cWall {'#'};						// Char representing an obstacle
 	
 	std::vector<std::vector<char>> gameArea;	// Game area will be stored in here, borders and obstacles
 	std::vector<std::vector<int>> snake;		// Snake is stored in here.
@@ -32,6 +31,7 @@ private:
 	void displaySnake();													// Display snake
 	
 	void setFood();															// Update food location
+	void setFood(int x, int y);												// Overloaded set food.
 	void consumedFood();													// Check if snake consumed food
 	
 	void chekInput();														// Check input for new directions
