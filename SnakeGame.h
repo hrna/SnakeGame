@@ -10,7 +10,6 @@
 class SnakeGame
 {
 private: 
-	WINDOW *rootScr {nullptr};					// root screen
 	int scrW {}, scrH {};						// Screen width / height
 	int xPos {}, yPos {};						// Default coordinates for the snake to start
 	int iKey {KEY_RIGHT};						// Default starting direction
