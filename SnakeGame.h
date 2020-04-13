@@ -6,17 +6,19 @@
 #include <cstdlib>
 #include <ctime>
 #include <string>
+#include <fstream>
 
 class SnakeGame
 {
 private: 
 	int scrW {}, scrH {};						// Screen width / height
 	int xPos {}, yPos {};						// Default coordinates for the snake to start
-	int iKey {KEY_RIGHT};						// Default starting direction
+	int iKey {};								// Default starting direction
 	int keyPressed {};							// Pressed key input stored in this
 	int points{};								// Points collected after each food
 	const char cFood {'o'};						// Char representing food
 	const char cWall {'#'};						// Char representing an obstacle
+	bool bLogging;								// Logging on / off
 	
 	std::vector<std::vector<char>> gameArea;	// Game area will be stored in here, borders and obstacles
 	std::vector<std::vector<int>> snake;		// Snake is stored in here.
@@ -35,6 +37,8 @@ private:
 	void consumedFood();													// Check if snake consumed food
 	
 	void chekInput();														// Check input for new directions
+	int autopilot(int k);
+	int hValue(int posY, int posX, int fPosY, int fPosX);
 	
 	void prepareGameArea();													// Prepares the game area vector (borders and obstacles)
 	void displayGameArea();													// Display game area borders and obstacles
@@ -43,6 +47,9 @@ private:
 	bool collisionDetection();												// Checking if the snake has collided to anything or itself
 	bool ifInSnake(std::vector<std::vector<int>> &v, bool sHead = false);	// Return true if anything is where the snake is
 																			// If sHead = true, check whole snake else skip the first element.
+	
+	bool predictSuccessfulMovement(int direction, int yPos, int xPos);		// Predicts if the next tile is free from obstacles (for autopilot)
+	bool log(std::string);													// Loggin things where it is implemented
 	
 	
 public:
