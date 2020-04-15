@@ -18,6 +18,7 @@ private:
 	int points{};								// Points collected after each food
 	const char cFood {'o'};						// Char representing food
 	const char cWall {'#'};						// Char representing an obstacle
+	const char cSnk {'x'};						// Char representing the snake
 	bool bLogging;								// Logging on / off
 	
 	std::vector<std::vector<char>> gameArea;	// Game area will be stored in here, borders and obstacles
