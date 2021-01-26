@@ -6,9 +6,9 @@
 #include <cstdlib>
 #include <ctime>
 #include <string>
-#include <fstream>
+#include "logger.h"
 
-class SnakeGame
+class SnakeGame : public Logger
 {
 private: 
 	int scrW {}, scrH {};						// Screen width / height
@@ -19,7 +19,6 @@ private:
 	const char cFood {'o'};						// Char representing food
 	const char cWall {'#'};						// Char representing an obstacle
 	const char cSnk {'x'};						// Char representing the snake
-	bool bLogging;								// Logging on / off
 	
 	std::vector<std::vector<char>> gameArea;	// Game area will be stored in here, borders and obstacles
 	std::vector<std::vector<int>> snake;		// Snake is stored in here.

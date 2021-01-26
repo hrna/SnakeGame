@@ -1,6 +1,7 @@
 #include "SnakeGame.h"
 
 
+
 SnakeGame::SnakeGame()
 {
 	initscr();						// Initialize the screen
@@ -14,7 +15,6 @@ SnakeGame::SnakeGame()
 	setSnake();						// Initialize the snake, this has to  be set before setFood.
 	setFood();						// Set the first piece of food
 	iKey = KEY_RIGHT;
-	bLogging = true;				// Set logging on / off
 }
 
 SnakeGame::~SnakeGame()
@@ -90,7 +90,6 @@ void SnakeGame::consumedFood()
 		insertObstacle();
 		setFood();
 		++points;
-		
 	} else {
 		// No food consumed, pop out the last element of snake.
 		int tailY = snake.at(snake.size() - 1).at(0);
@@ -114,7 +113,7 @@ void SnakeGame::consumedFood()
 void SnakeGame::chekInput()
 {
 	// this should be defined elsewhere
-	bool bAutopilot = true;
+	bool bAutopilot = false;
 	
 	// MOVEMENT
 	if (bAutopilot)
@@ -244,7 +243,7 @@ bool SnakeGame::collisionDetection()
 	
 	if (cWall == gameArea[y][x])
 	{
-		log("[INFO] ::  Hit the wall!");
+		logEvent("[INFO] ::  Hit the wall!");
 		return true;
 	} 
 	else 
@@ -252,7 +251,7 @@ bool SnakeGame::collisionDetection()
 		// Check if snake bit itself
 		if (ifInSnake(snake))
 		{
-			log("[INFO] :: Snake hit itself!");
+			logEvent("[INFO] :: Snake hit itself!");
 			return true;
 		}
 	}
@@ -313,7 +312,7 @@ void SnakeGame::insertObstacle()
 			gameArea.at(obstacle[0] + 1).at(obstacle[1] + 1) = cWall;
 			obstacleOK = true;
 		}
-	}	
+	}
 }
 
 void SnakeGame::play()
@@ -374,9 +373,9 @@ int SnakeGame::hValue(int posY, int posX, int fPosY, int fPosX)
 	std::string strRight {"Right: " + std::to_string(rightValue)};
 	std::string curPos {"Current (Y, X): " + std::to_string(posY) + ", " + std::to_string(posX)};
 	
-	log("[DEBUG] :: " + curPos + ", Food position (Y, X): "+ std::to_string(fPosY) + ", " + std::to_string(fPosX));
-	log("[DEBUG] :: " + strUp + ", " + strDown + ", " + strLeft + ", " + strRight);
-	log("[DEBUG] :: PreviousKey: " + std::to_string(previousValue));
+	logEvent("[DEBUG] :: " + curPos + ", Food position (Y, X): "+ std::to_string(fPosY) + ", " + std::to_string(fPosX));
+	logEvent("[DEBUG] :: " + strUp + ", " + strDown + ", " + strLeft + ", " + strRight);
+	logEvent("[DEBUG] :: PreviousKey: " + std::to_string(previousValue));
 	
 	while (!selectionOK)
 	{
@@ -386,24 +385,24 @@ int SnakeGame::hValue(int posY, int posX, int fPosY, int fPosX)
 			{
 				if (predictSuccessfulMovement(KEY_UP,posY,posX))
 				{
-					log("[Prediction] :: Collision ahead if moving UP, diverting!");
+					logEvent("[Prediction] :: Collision ahead if moving UP, diverting!");
 					upOK = false;
 					/*if (leftValue <= rightValue)
 					{
-						log("[Prediction] :: LEFT");
+						Logger::log("[Prediction] :: LEFT");
 						previousValue = KEY_LEFT;
 						newKey = KEY_LEFT;
 					}
 					else
 					{
-						log("[Prediction] :: RIGHT");
+						Logger::log("[Prediction] :: RIGHT");
 						previousValue = KEY_RIGHT;
 						newKey = KEY_RIGHT;
 					}*/
 				}
 				else
 				{
-					log("[Movement] :: UP");
+					logEvent("[Movement] :: UP");
 					previousValue = KEY_UP;
 					newKey = KEY_UP;
 					selectionOK = true;
@@ -415,24 +414,24 @@ int SnakeGame::hValue(int posY, int posX, int fPosY, int fPosX)
 			{
 				if (predictSuccessfulMovement(KEY_DOWN,posY,posX))
 				{
-					log("[Prediction] :: Collision ahead if moving DOWN, diverting!");
+					logEvent("[Prediction] :: Collision ahead if moving DOWN, diverting!");
 					downOK = false;
 					/*if (leftValue <= rightValue)
 					{
-						log("[Prediction] :: LEFT");
+						Logger::log("[Prediction] :: LEFT");
 						previousValue = KEY_LEFT;
 						newKey = KEY_LEFT;
 					}
 					else
 					{
-						log("[Prediction] :: RIGHT");
+						Logger::log("[Prediction] :: RIGHT");
 						previousValue = KEY_RIGHT;
 						newKey = KEY_RIGHT;
 					}*/
 				}
 				else
 				{
-					log("[Movement] :: DOWN");
+					logEvent("[Movement] :: DOWN");
 					previousValue = KEY_DOWN;
 					newKey = KEY_DOWN;
 					selectionOK = true;
@@ -443,25 +442,25 @@ int SnakeGame::hValue(int posY, int posX, int fPosY, int fPosX)
 			{
 				if (predictSuccessfulMovement(KEY_LEFT,posY,posX))
 				{
-					log("[Prediction] :: Collision ahead if moving LEFT, diverting!");
+					logEvent("[Prediction] :: Collision ahead if moving LEFT, diverting!");
 					leftOK = false;
 					/*
 					if (upValue <= downValue)
 					{
-						log("[Prediction] :: UP");
+						Logger::log("[Prediction] :: UP");
 						previousValue = KEY_UP;
 						newKey = KEY_UP;
 					}
 					else
 					{
-						log("[Prediction] :: DOWN");
+						Logger::log("[Prediction] :: DOWN");
 						previousValue = KEY_DOWN;
 						newKey = KEY_DOWN;
 					}*/
 				}
 				else
 				{
-					log("[Movement] :: LEFT");
+					logEvent("[Movement] :: LEFT");
 					previousValue = KEY_LEFT;
 					newKey = KEY_LEFT;
 					selectionOK = true;
@@ -472,25 +471,25 @@ int SnakeGame::hValue(int posY, int posX, int fPosY, int fPosX)
 			{
 				if (predictSuccessfulMovement(KEY_RIGHT,posY,posX))
 				{
-					log("[Prediction] :: Collision ahead if moving RIGHT, diverting!");
+					logEvent("[Prediction] :: Collision ahead if moving RIGHT, diverting!");
 					rightOK = false;
 					/*
 					if (upValue <= downValue)
 					{
-						log("[Prediction] :: UP");
+						Logger::log("[Prediction] :: UP");
 						previousValue = KEY_UP;
 						newKey = KEY_UP;
 					}
 					else
 					{
-						log("[Prediction] :: DOWN");
+						Logger::log("[Prediction] :: DOWN");
 						previousValue = KEY_DOWN;
 						newKey = KEY_DOWN;
 					}*/
 				}
 				else
 				{
-					log("[Movement] :: RIGHT");
+					logEvent("[Movement] :: RIGHT");
 					previousValue = KEY_RIGHT;
 					newKey = KEY_RIGHT;
 					selectionOK = true;
@@ -499,9 +498,9 @@ int SnakeGame::hValue(int posY, int posX, int fPosY, int fPosX)
 			else
 			{
 				if (predictSuccessfulMovement(KEY_UP,posY,posX))
-					log("[Prediction] :: Collision ahead if moving previous direction! SHIT HAPPENS!");
+					logEvent("[Prediction] :: Collision ahead if moving previous direction! SHIT HAPPENS!");
 					
-				log("[Fallback] :: next movement will be previous: " + std::to_string(previousValue));
+				logEvent("[Fallback] :: next movement will be previous: " + std::to_string(previousValue));
 				newKey = previousValue;
 				selectionOK = true;
 			}
@@ -509,9 +508,9 @@ int SnakeGame::hValue(int posY, int posX, int fPosY, int fPosX)
 		else 
 		{
 				if (predictSuccessfulMovement(KEY_UP,posY,posX))
-					log("[Prediction] :: Collision ahead if moving previous direction! oh god, why?");
+					logEvent("[Prediction] :: Collision ahead if moving previous direction! oh god, why?");
 					
-			log("[Fallback] :: Snake pos Y/X matches to Food Y/X");
+			logEvent("[Fallback] :: Snake pos Y/X matches to Food Y/X");
 			newKey = previousValue;
 			selectionOK = true;
 		}
@@ -526,7 +525,7 @@ int SnakeGame::hValue(int posY, int posX, int fPosY, int fPosX)
 
 
 // A simple logging mechanism to help debugging
-bool SnakeGame::log(std::string str)
+/*bool SnakeGame::log(std::string str)
 {
 	if (!bLogging)
 		return false;
@@ -539,7 +538,7 @@ bool SnakeGame::log(std::string str)
 		return true;
 	}
 	else return false;
-}
+}*/
 
 // direction is the new heading nad y/x pos is the current position of the snake head.
 bool SnakeGame::predictSuccessfulMovement(int direction, int yPos, int xPos)
@@ -559,7 +558,7 @@ bool SnakeGame::predictSuccessfulMovement(int direction, int yPos, int xPos)
 		{
 			if (cWall == gameArea[yPos+1][xPos] || cSnk == gameArea[yPos+1][xPos])
 				bResult = true;
-			break;			
+			break;
 		}
 			
 		case 260:	// LEFT
