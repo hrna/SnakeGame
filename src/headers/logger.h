@@ -11,6 +11,9 @@ class Logger
 private:
 
 public:
+	Logger();
+	~Logger();
+
 	void logEvent(LogEvents event, std::string);
 
 };

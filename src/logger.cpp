@@ -1,5 +1,15 @@
 #include "headers/logger.h"
 
+Logger::Logger()
+{
+
+}
+
+Logger::~Logger()
+{
+	
+}
+
 void Logger::logEvent(LogEvents event, std::string logstr)
 {
 	std::string sEvent {};

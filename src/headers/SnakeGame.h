@@ -8,33 +8,34 @@
 #include <string>
 #include "logger.h"
 
-class SnakeGame : public Logger
+class SnakeGame
 {
 private:
+	Logger log;											// instantiate logger
 	int scrW {}, scrH {};						// Screen width / height
 	int xPos {}, yPos {};						// Default coordinates for the snake to start
-	int iKey {};								// Default starting direction
+	int iKey {};										// Default starting direction
 	int keyPressed {};							// Pressed key input stored in this
-	int points{};								// Points collected after each food
-	const char cFood {'o'};						// Char representing food
-	const char cWall {'#'};						// Char representing an obstacle
-	const char cSnk {'x'};						// Char representing the snake
+	int points{};										// Points collected after each food
+	const char cFood {'o'};					// Char representing food
+	const char cWall {'#'};					// Char representing an obstacle
+	const char cSnk {'x'};					// Char representing the snake
 
-	std::vector<std::vector<char>> gameArea;	// Game area will be stored in here, borders and obstacles
-	std::vector<std::vector<int>> snake;		// Snake is stored in here.
-	std::vector<int> food;						// Coordinates for food location
-	std::vector<int> mov;						// Coordinates for movement in checkInput()
+	std::vector<std::vector<char>> gameArea;		// Game area will be stored in here, borders and obstacles
+	std::vector<std::vector<int>> snake;				// Snake is stored in here.
+	std::vector<int> food;											// Coordinates for food location
+	std::vector<int> mov;												// Coordinates for movement in checkInput()
 	std::vector<std::vector<int>>::iterator it;	// Iterator used in checkInput(): adding new head
 
-	void terminate(); 														// Terminates the window
-	void displayEndScreen();												// Displaying endscreen
+	void terminate(); 													// Terminates the window
+	void displayEndScreen();										// Displaying endscreen
 
 	void setSnake();														// Starting coordinates for the snake
-	void displaySnake();													// Display snake
+	void displaySnake();												// Display snake
 
 	void setFood();															// Update food location
-	void setFood(int x, int y);												// Overloaded set food.
-	void consumedFood();													// Check if snake consumed food
+	void setFood(int x, int y);									// Overloaded set food.
+	void consumedFood();												// Check if snake consumed food
 
 	void chekInput();														// Check input for new directions
 	int autopilot(int k);
