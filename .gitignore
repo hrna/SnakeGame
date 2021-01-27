@@ -1,3 +1,6 @@
 SnakeGame
 *.d
 *.o
+obj/
+bin/
+log.txt

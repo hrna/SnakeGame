@@ -8,10 +8,18 @@ TARGET := SnakeGame
 
 .PHONY: clean
 
+
 ${TARGET}: ${OBJECTS}
 	${CXX} ${CXXFLAGS} $^ -o $@ -lncurses
 
 -include ${DEPS}
 
+install:
+	@mkdir build
+	@mkdir build/obj
+	@mkdir build/bin
+	@mv ${DEPS} ${OBJECTS} build/obj/
+	@mv ${TARGET} build/bin/
+
 clean:
-	rm -f ${DEPS} ${OBJECTS} ${TARGET}
+	@rm -rf build/
