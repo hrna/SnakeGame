@@ -1,7 +1,7 @@
 CXX := g++
 CXXFLAGS := -Wall -Werror -MMD
 
-SOURCES := $(wildcard *.cpp)
+SOURCES := $(wildcard src/*.cpp)
 OBJECTS := $(patsubst %.cpp,%.o,$(SOURCES))
 DEPS := ${OBJECTS:.o=.d}
 TARGET := SnakeGame
