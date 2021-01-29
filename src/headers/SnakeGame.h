@@ -50,12 +50,13 @@ private:
 																			// If sHead = true, check whole snake else skip the first element.
 
 	bool predictSuccessfulMovement(int direction, int yPos, int xPos);		// Predicts if the next tile is free from obstacles (for autopilot)
+	bool bAutopilot {false};		// boolean for autopilot, default off. commandline command --mode=auto activates
 
 public:
 	SnakeGame();
 	~SnakeGame();
 
-	void play();	// run the game.
+	void play(bool);	// run the game.
 };
 
 #endif // _SAKE_GAME_

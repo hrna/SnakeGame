@@ -113,7 +113,7 @@ void SnakeGame::consumedFood()
 void SnakeGame::chekInput()
 {
 	// this should be defined elsewhere
-	bool bAutopilot = true;
+	//bool bAutopilot = true;
 
 	// MOVEMENT
 	if (bAutopilot)
@@ -315,8 +315,9 @@ void SnakeGame::insertObstacle()
 	}
 }
 
-void SnakeGame::play()
+void SnakeGame::play(bool bAuto)
 {
+	bAutopilot = bAuto ? true : false; 
 
 	while (!collisionDetection())	// Run the game unless snake hit the wall or itself
 	{
