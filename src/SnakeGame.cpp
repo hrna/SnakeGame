@@ -112,10 +112,8 @@ void SnakeGame::consumedFood()
  */
 void SnakeGame::chekInput()
 {
-	// this should be defined elsewhere
-	//bool bAutopilot = true;
-
 	// MOVEMENT
+	// use autopolot if bAutopilot = true
 	if (bAutopilot)
 	{
 		iKey = autopilot(iKey);
@@ -317,7 +315,8 @@ void SnakeGame::insertObstacle()
 
 void SnakeGame::play(bool bAuto)
 {
-	bAutopilot = bAuto ? true : false; 
+	// if true autopolot is enabled
+	bAutopilot = bAuto ? true : false;
 
 	while (!collisionDetection())	// Run the game unless snake hit the wall or itself
 	{
@@ -388,18 +387,6 @@ int SnakeGame::hValue(int posY, int posX, int fPosY, int fPosX)
 				{
 					log.logEvent(LogEvents::PREDICTION, "Collision ahead if moving UP, diverting!");
 					upOK = false;
-					/*if (leftValue <= rightValue)
-					{
-						Logger::log("[Prediction] :: LEFT");
-						previousValue = KEY_LEFT;
-						newKey = KEY_LEFT;
-					}
-					else
-					{
-						Logger::log("[Prediction] :: RIGHT");
-						previousValue = KEY_RIGHT;
-						newKey = KEY_RIGHT;
-					}*/
 				}
 				else
 				{
@@ -417,18 +404,6 @@ int SnakeGame::hValue(int posY, int posX, int fPosY, int fPosX)
 				{
 					log.logEvent(LogEvents::PREDICTION, "Collision ahead if moving DOWN, diverting!");
 					downOK = false;
-					/*if (leftValue <= rightValue)
-					{
-						Logger::log("[Prediction] :: LEFT");
-						previousValue = KEY_LEFT;
-						newKey = KEY_LEFT;
-					}
-					else
-					{
-						Logger::log("[Prediction] :: RIGHT");
-						previousValue = KEY_RIGHT;
-						newKey = KEY_RIGHT;
-					}*/
 				}
 				else
 				{
@@ -445,19 +420,6 @@ int SnakeGame::hValue(int posY, int posX, int fPosY, int fPosX)
 				{
 					log.logEvent(LogEvents::PREDICTION, "Collision ahead if moving LEFT, diverting!");
 					leftOK = false;
-					/*
-					if (upValue <= downValue)
-					{
-						Logger::log("[Prediction] :: UP");
-						previousValue = KEY_UP;
-						newKey = KEY_UP;
-					}
-					else
-					{
-						Logger::log("[Prediction] :: DOWN");
-						previousValue = KEY_DOWN;
-						newKey = KEY_DOWN;
-					}*/
 				}
 				else
 				{
@@ -474,19 +436,6 @@ int SnakeGame::hValue(int posY, int posX, int fPosY, int fPosX)
 				{
 					log.logEvent(LogEvents::MOVEMENT, "Collision ahead if moving RIGHT, diverting!");
 					rightOK = false;
-					/*
-					if (upValue <= downValue)
-					{
-						Logger::log("[Prediction] :: UP");
-						previousValue = KEY_UP;
-						newKey = KEY_UP;
-					}
-					else
-					{
-						Logger::log("[Prediction] :: DOWN");
-						previousValue = KEY_DOWN;
-						newKey = KEY_DOWN;
-					}*/
 				}
 				else
 				{
@@ -523,23 +472,6 @@ int SnakeGame::hValue(int posY, int posX, int fPosY, int fPosX)
 
 	return newKey;
 }
-
-
-// A simple logging mechanism to help debugging
-/*bool SnakeGame::log(std::string str)
-{
-	if (!bLogging)
-		return false;
-
-	std::ofstream logFile {"log.txt", std::ios_base::app};
-	if (logFile.is_open())
-	{
-		logFile << str << std::endl;
-		logFile.close();
-		return true;
-	}
-	else return false;
-}*/
 
 // direction is the new heading nad y/x pos is the current position of the snake head.
 bool SnakeGame::predictSuccessfulMovement(int direction, int yPos, int xPos)
