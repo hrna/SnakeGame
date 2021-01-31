@@ -113,7 +113,7 @@ void SnakeGame::consumedFood()
 void SnakeGame::chekInput()
 {
 	// MOVEMENT
-	// use autopolot if bAutopilot = true
+	// use autopilot if bAutopilot = true
 	if (bAutopilot)
 	{
 		iKey = autopilot(iKey);
@@ -148,17 +148,6 @@ void SnakeGame::chekInput()
 	}
 	it = snake.begin();
 	snake.insert(it, mov);
-}
-
-int SnakeGame::autopilot(int k)
-{
-	getch();	// keyboard input is needed to run things around
-				// even if we dont use it.. any other ways to do it, let me know..
-
-	int curX = snake[0][1];
-	int curY = snake[0][0];
-
-	return hValue(curY,curX,food[0],food[1]);
 }
 
 // *********************************************************************
@@ -334,6 +323,17 @@ void SnakeGame::play(bool bAuto)
 }
 
 
+int SnakeGame::autopilot(int k)
+{
+	getch();	// keyboard input is needed to run things around
+				// even if we dont use it.. any other ways to do it, let me know..
+
+	int curX = snake[0][1];
+	int curY = snake[0][0];
+
+	return hValue(curY,curX,food[0],food[1]);
+}
+
 /*
  * Calculating Heuristic value from position to end.
  * Manhattan style calculation, where are only 4 possible directions to go.
@@ -447,11 +447,31 @@ int SnakeGame::hValue(int posY, int posX, int fPosY, int fPosX)
 			}
 			else
 			{
-				if (predictSuccessfulMovement(KEY_UP,posY,posX))
-					log.logEvent(LogEvents::PREDICTION, "Collision ahead if moving previous direction! SHIT HAPPENS!");
-
 				log.logEvent(LogEvents::FALLBACK, "next movement will be previous: " + std::to_string(previousValue));
 				newKey = previousValue;
+
+				if (predictSuccessfulMovement(KEY_UP,posY,posX))
+				{
+					log.logEvent(LogEvents::PREDICTION, "Collision ahead if moving previous direction (UP OK)! SHIT HAPPENS!");
+					newKey = KEY_UP;
+				}
+				if (predictSuccessfulMovement(KEY_DOWN,posY,posX))
+				{
+					log.logEvent(LogEvents::PREDICTION, "Collision ahead if moving previous direction (DOWN OK)! SHIT HAPPENS!");
+					newKey = KEY_DOWN;
+				}
+				if (predictSuccessfulMovement(KEY_LEFT,posY,posX))
+				{
+					log.logEvent(LogEvents::PREDICTION, "Collision ahead if moving previous direction (LEFT OK)! SHIT HAPPENS!");
+					newKey = KEY_LEFT;
+				}
+				if (predictSuccessfulMovement(KEY_RIGHT,posY,posX))
+				{
+					log.logEvent(LogEvents::PREDICTION, "Collision ahead if moving previous direction (RIGHT OK)! SHIT HAPPENS!");
+					newKey = KEY_RIGHT;
+				}
+				
+				log.logEvent(LogEvents::DEBUG, "Actual key pressed is: " + std::to_string(newKey));
 				selectionOK = true;
 			}
 		}
@@ -508,6 +528,6 @@ bool SnakeGame::predictSuccessfulMovement(int direction, int yPos, int xPos)
 			break;
 		}
 	}
-
+	log.logEvent(LogEvents::DEBUG, "predict successfull movement: " + std::to_string(bResult));
 	return bResult;
 }

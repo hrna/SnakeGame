@@ -4,3 +4,4 @@ SnakeGame
 obj/
 bin/
 log.txt
+.vscode/
