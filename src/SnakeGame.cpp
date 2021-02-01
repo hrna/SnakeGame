@@ -34,7 +34,7 @@ void SnakeGame::setSnake()
 	yPos = scrH / 2;
 
 	// Initialize vectors holding the snake X & Y coordinates
-	snake = {{yPos, xPos}, {yPos, xPos - 1}, {yPos, xPos - 2} };
+	snake = { {yPos, xPos}, {yPos, xPos - 1}, {yPos, xPos - 2} };
 }
 
 /*
@@ -493,7 +493,7 @@ int SnakeGame::hValue(int posY, int posX, int fPosY, int fPosX)
 	return newKey;
 }
 
-// direction is the new heading nad y/x pos is the current position of the snake head.
+// direction is the new heading and y/x pos is the current position of the snake head.
 bool SnakeGame::predictSuccessfulMovement(int direction, int yPos, int xPos)
 {
 	bool bResult {false};
@@ -501,7 +501,7 @@ bool SnakeGame::predictSuccessfulMovement(int direction, int yPos, int xPos)
 	switch (direction)
 	{
 		case 259: 	// UP
-		{
+		{	
 			if (cWall == gameArea[yPos-1][xPos] || cSnk == gameArea[yPos-1][xPos])
 				bResult =  true;
 			break;
